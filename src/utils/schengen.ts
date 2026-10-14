@@ -143,6 +143,17 @@ export type ValidationErrors = Record<
   { entry?: string; exit?: string }
 >;
 
+let tripId = 0;
+
+export function createTrip(patch: Partial<TripInput> = {}): TripInput {
+  return {
+    id: `trip-${tripId++}`,
+    entry: "",
+    exit: "",
+    ...patch,
+  };
+}
+
 /* ------------------------------- validation ------------------------------ */
 
 /** A row with neither date filled in is treated as blank and ignored. */

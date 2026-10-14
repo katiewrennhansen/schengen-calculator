@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { parseDate } from "@internationalized/date";
 import { Button, Chip, DatePicker } from "@heroui/react";
+import { Controller, type Control } from "react-hook-form";
 import { Cell } from "./Cell.tsx";
 import type { TripInput, TripResult } from "../utils/schengen.ts";
 import { formatDate, plural } from "../utils/format.ts";
@@ -15,7 +16,7 @@ type Props = {
   trip: TripInput;
   error?: { entry?: string; exit?: string };
   result?: TripResult;
-  onChange: (id: string, patch: Partial<Omit<TripInput, "id">>) => void;
+  control: Control<{ trips: TripInput[] }>;
   onRemove: (id: string) => void;
 };
 
@@ -24,7 +25,7 @@ export function TripRow({
   trip,
   error,
   result,
-  onChange,
+  control,
   onRemove,
 }: Props) {
   const over = result?.overstay ?? false;
@@ -34,11 +35,26 @@ export function TripRow({
       ? "warning"
       : "success";
 
-  const onEntryChange = (date: any) =>
-    onChange(trip.id, { entry: date ? date.toString() : "" });
+  const toIsoDate = (value: unknown) => {
+    if (!value) return "";
+    if (typeof value === "string") return value;
+    if (value instanceof Date) return value.toISOString().slice(0, 10);
 
-  const onExitChange = (date: any) =>
-    onChange(trip.id, { exit: date ? date.toString() : "" });
+    const maybeDate = value as {
+      year?: number;
+      month?: number;
+      day?: number;
+    };
+    if (
+      typeof maybeDate.year === "number" &&
+      typeof maybeDate.month === "number" &&
+      typeof maybeDate.day === "number"
+    ) {
+      return `${maybeDate.year}-${String(maybeDate.month).padStart(2, "0")}-${String(maybeDate.day).padStart(2, "0")}`;
+    }
+
+    return String(value).slice(0, 10);
+  };
 
   return (
     <motion.li
@@ -58,23 +74,39 @@ export function TripRow({
         over ? "border-danger-200 bg-danger-50/50" : "border-default-200",
       )}
     >
-      <DatePicker
-        variant="bordered"
-        aria-label={`Date of entry, stay ${index + 1}`}
-        labelPlacement="inside"
-        value={trip.entry ? (parseDate(trip.entry) as any) : null}
-        onChange={onEntryChange}
-        isInvalid={!!error?.entry}
-        errorMessage={error?.entry}
+      <Controller
+        name={`trips.${index}.entry` as const}
+        control={control}
+        render={({ field }) => (
+          <DatePicker
+            variant="bordered"
+            aria-label={`Date of entry, stay ${index + 1}`}
+            labelPlacement="inside"
+            value={field.value ? (parseDate(field.value) as any) : null}
+            onChange={(date) => {
+              field.onChange(toIsoDate(date));
+            }}
+            isInvalid={!!error?.entry}
+            errorMessage={error?.entry}
+          />
+        )}
       />
-      <DatePicker
-        variant="bordered"
-        aria-label={`Date of exit, stay ${index + 1}`}
-        minValue={trip.entry ? (parseDate(trip.entry) as any) : undefined}
-        value={trip.exit ? (parseDate(trip.exit) as any) : null}
-        onChange={onExitChange}
-        isInvalid={!!error?.exit}
-        errorMessage={error?.exit}
+      <Controller
+        name={`trips.${index}.exit` as const}
+        control={control}
+        render={({ field }) => (
+          <DatePicker
+            variant="bordered"
+            aria-label={`Date of exit, stay ${index + 1}`}
+            minValue={trip.entry ? (parseDate(trip.entry) as any) : undefined}
+            value={field.value ? (parseDate(field.value) as any) : null}
+            onChange={(date) => {
+              field.onChange(toIsoDate(date));
+            }}
+            isInvalid={!!error?.exit}
+            errorMessage={error?.exit}
+          />
+        )}
       />
 
       <Cell label="Days of stay">

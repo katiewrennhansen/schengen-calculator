@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import {
   calculate,
+  createTrip,
   todayIso,
   validateTrips,
   type TripInput,
@@ -9,16 +10,8 @@ import {
 import { CalculatorCard } from "./CalculatorCard.tsx";
 import { Summary } from "./Summary.tsx";
 
-let nextId = 0;
-const newTrip = (patch: Partial<TripInput> = {}): TripInput => ({
-  id: `trip-${nextId++}`,
-  entry: "",
-  exit: "",
-  ...patch,
-});
-
 export function Calculator() {
-  const [trips, setTrips] = useState<TripInput[]>([newTrip()]);
+  const [trips, setTrips] = useState<TripInput[]>([createTrip()]);
   const [referenceDate, setReferenceDate] = useState(todayIso());
   const [calculated, setCalculated] = useState(false);
 
@@ -30,27 +23,13 @@ export function Calculator() {
     [calculated, hasErrors, trips, referenceDate],
   );
 
-  const edit = (id: string, patch: Partial<Omit<TripInput, "id">>) => {
-    setTrips((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)));
-    setCalculated(false);
-  };
-
-  const add = () => setTrips((prev) => [...prev, newTrip()]);
-
-  const remove = (id: string) => {
-    setTrips((prev) => {
-      const rest = prev.filter((t) => t.id !== id);
-      return rest.length ? rest : [newTrip()];
-    });
-  };
-
   const calculateTrips = (nextTrips: TripInput[]) => {
     setTrips(nextTrips);
     setCalculated(true);
   };
 
   const reset = () => {
-    setTrips([newTrip()]);
+    setTrips([createTrip()]);
     setCalculated(false);
   };
 
@@ -61,9 +40,6 @@ export function Calculator() {
         errors={errors}
         result={result}
         hasErrors={hasErrors}
-        onAdd={add}
-        onChange={edit}
-        onRemove={remove}
         onCalculate={calculateTrips}
         onReset={reset}
       />
