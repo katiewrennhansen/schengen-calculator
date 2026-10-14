@@ -1,8 +1,8 @@
 import { parseDate } from "@internationalized/date";
 import { Card, CardBody, DatePicker, Progress } from "@heroui/react";
-import type { CalculationResult } from "../lib/schengen.ts";
-import { MAX_DAYS } from "../lib/schengen.ts";
-import { formatDate, plural } from "../lib/format.ts";
+import type { CalculationResult } from "../utils/schengen.ts";
+import { MAX_DAYS } from "../utils/schengen.ts";
+import { formatDate, plural } from "../utils/format.ts";
 import { OverstayAlert } from "./OverstayAlert";
 
 type Props = {
@@ -65,28 +65,28 @@ export function Summary({
             showValueLabel={false}
           />
 
-          <dl className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-3">
             <div>
-              <dt className="text-small text-default-500">Days used</dt>
-              <dd className="text-3xl font-semibold">
+              <div className="text-small text-default-500">Days used</div>
+              <div className="text-3xl font-semibold">
                 {plan.daysUsed}
                 <span className="text-medium font-normal text-default-400">
                   {" "}
                   / {MAX_DAYS}
                 </span>
-              </dd>
+              </div>
             </div>
             <div>
-              <dt className="text-small text-default-500">Days remaining</dt>
-              <dd className={`text-3xl font-semibold ${remainingText}`}>
+              <div className="text-small text-default-500">Days remaining</div>
+              <div className={`text-3xl font-semibold ${remainingText}`}>
                 {plan.daysRemaining}
-              </dd>
+              </div>
             </div>
             <div>
-              <dt className="text-small text-default-500">
+              <div className="text-small text-default-500">
                 Next stay you can start
-              </dt>
-              <dd className="font-medium">
+              </div>
+              <div className="font-medium">
                 {plan.nextEntry ? (
                   <>
                     {formatDate(plan.nextEntry)}
@@ -98,9 +98,9 @@ export function Summary({
                 ) : (
                   "None within the next 180 days"
                 )}
-              </dd>
+              </div>
             </div>
-          </dl>
+          </div>
         </CardBody>
       </Card>
     </section>

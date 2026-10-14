@@ -1,11 +1,11 @@
-import type { ReactNode } from "react";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { parseDate } from "@internationalized/date";
 import { Button, Chip, DatePicker } from "@heroui/react";
-import type { TripInput, TripResult } from "../lib/schengen.ts";
-import { formatDate, plural } from "../lib/format.ts";
+import { Cell } from "./Cell.tsx";
+import type { TripInput, TripResult } from "../utils/schengen.ts";
+import { formatDate, plural } from "../utils/format.ts";
 
 export const ROW_GRID =
   "lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.3fr)_minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1.4fr)_2.5rem]";
@@ -19,16 +19,6 @@ type Props = {
   onRemove: (id: string) => void;
 };
 
-/** Result cell: shows its own label on small screens, where the column header is hidden. */
-function Cell({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <div className="flex items-center justify-between gap-2">
-      <span className="text-small text-default-500 lg:hidden">{label}</span>
-      <div className="text-right lg:text-left">{children}</div>
-    </div>
-  );
-}
-
 export function TripRow({
   index,
   trip,
@@ -38,6 +28,11 @@ export function TripRow({
   onRemove,
 }: Props) {
   const over = result?.overstay ?? false;
+  const chipColor = result?.overstay
+    ? "danger"
+    : result && result.daysInLast180 >= 80
+      ? "warning"
+      : "success";
 
   const onEntryChange = (date: any) =>
     onChange(trip.id, { entry: date ? date.toString() : "" });
@@ -83,26 +78,18 @@ export function TripRow({
       />
 
       <Cell label="Days of stay">
-        <span className="font-medium">{result ? result.daysOfStay : "–"}</span>
+        <span className="font-medium">
+          {result ? result.daysOfStay : "\u2013"}
+        </span>
       </Cell>
 
       <Cell label="Days in last 180 days">
         {result ? (
-          <Chip
-            size="sm"
-            variant="flat"
-            color={
-              result.overstay
-                ? "danger"
-                : result.daysInLast180 >= 80
-                  ? "warning"
-                  : "success"
-            }
-          >
+          <Chip size="sm" variant="flat" color={chipColor}>
             {result.daysInLast180} / 90
           </Chip>
         ) : (
-          <span>–</span>
+          <span>{"\u2013"}</span>
         )}
       </Cell>
 
@@ -127,7 +114,7 @@ export function TripRow({
             )}
           </div>
         ) : (
-          <span>–</span>
+          <span>{"\u2013"}</span>
         )}
       </Cell>
 
