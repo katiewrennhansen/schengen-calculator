@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { parseDate } from "@internationalized/date";
 import { Button, Chip, DatePicker } from "@heroui/react";
@@ -44,8 +45,18 @@ export function TripRow({
     onChange(trip.id, { exit: date ? date.toString() : "" });
 
   return (
-    <li
-      className={`grid grid-cols-1 gap-3 rounded-large border p-4 items-center lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-2 lg:py-3 ${ROW_GRID} ${
+    <motion.li
+      layout
+      initial={{ opacity: 0, height: 0, marginBottom: 0, scale: 0.98, y: 8 }}
+      animate={{
+        opacity: 1,
+        height: "auto",
+        scale: 1,
+        y: 0,
+      }}
+      exit={{ opacity: 0, height: 0, marginBottom: 0, scale: 0.98 }}
+      transition={{ duration: 0.22, ease: "easeOut" }}
+      className={`grid grid-cols-1 gap-3 rounded-large border p-4 items-center overflow-hidden lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-2 lg:py-3 last:mb-0 ${ROW_GRID} ${
         over ? "border-danger-200 bg-danger-50/50" : "border-default-200"
       }`}
     >
@@ -129,6 +140,6 @@ export function TripRow({
           <TrashIcon className="size-4" />
         </Button>
       </div>
-    </li>
+    </motion.li>
   );
 }

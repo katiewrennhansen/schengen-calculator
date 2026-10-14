@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { AnimatePresence } from "framer-motion";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button, Card, CardBody } from "@heroui/react";
 import type {
@@ -58,18 +59,20 @@ export function CalculatorCard({
           <span className="sr-only">Remove</span>
         </div>
 
-        <ul className="flex flex-col gap-3 lg:gap-0">
-          {trips.map((trip, i) => (
-            <TripRow
-              key={trip.id}
-              index={i}
-              trip={trip}
-              error={showErrors ? errors[trip.id] : undefined}
-              result={resultById?.get(trip.id)}
-              onChange={onChange}
-              onRemove={onRemove}
-            />
-          ))}
+        <ul className="flex flex-col gap-0">
+          <AnimatePresence initial={false} mode="popLayout">
+            {trips.map((trip, i) => (
+              <TripRow
+                key={trip.id}
+                index={i}
+                trip={trip}
+                error={showErrors ? errors[trip.id] : undefined}
+                result={resultById?.get(trip.id)}
+                onChange={onChange}
+                onRemove={onRemove}
+              />
+            ))}
+          </AnimatePresence>
         </ul>
 
         {notice && (

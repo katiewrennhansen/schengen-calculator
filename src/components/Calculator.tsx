@@ -60,11 +60,6 @@ export function Calculator() {
     [calculated, hasErrors, trips, referenceDate],
   );
 
-  const resultById = useMemo(
-    () => new Map(result?.trips.map((r) => [r.id, r])),
-    [result],
-  );
-
   const edit = (id: string, patch: Partial<Omit<TripInput, "id">>) => {
     setTrips((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)));
     setCalculated(false);
@@ -112,7 +107,7 @@ export function Calculator() {
         errors={errors}
         showErrors={showErrors}
         notice={notice}
-        resultById={resultById}
+        result={result}
         onAdd={add}
         onChange={edit}
         onRemove={remove}
