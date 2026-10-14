@@ -39,7 +39,7 @@ export function Header() {
 
         <div className="max-w-3xl">
           <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Schengen 90/180 day calculator
+            Schengen Visa Calculator
           </h1>
           <p className="mt-4 max-w-2xl text-base text-slate-200 sm:text-lg">
             Enter your past trips and any you're planning. Entry and exit days

@@ -7,9 +7,8 @@ import { Controller, type Control } from "react-hook-form";
 import { Cell } from "./Cell.tsx";
 import type { TripInput, TripResult } from "../utils/schengen.ts";
 import { formatDate, plural } from "../utils/format.ts";
-
-export const ROW_GRID =
-  "lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.3fr)_minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1.4fr)_2.5rem]";
+import { ROW_GRID } from "../constants.ts";
+import { toIsoDate } from "../utils/dates.ts";
 
 type Props = {
   index: number;
@@ -35,27 +34,6 @@ export function TripRow({
       ? "warning"
       : "success";
 
-  const toIsoDate = (value: unknown) => {
-    if (!value) return "";
-    if (typeof value === "string") return value;
-    if (value instanceof Date) return value.toISOString().slice(0, 10);
-
-    const maybeDate = value as {
-      year?: number;
-      month?: number;
-      day?: number;
-    };
-    if (
-      typeof maybeDate.year === "number" &&
-      typeof maybeDate.month === "number" &&
-      typeof maybeDate.day === "number"
-    ) {
-      return `${maybeDate.year}-${String(maybeDate.month).padStart(2, "0")}-${String(maybeDate.day).padStart(2, "0")}`;
-    }
-
-    return String(value).slice(0, 10);
-  };
-
   return (
     <motion.li
       layout
@@ -69,9 +47,9 @@ export function TripRow({
       exit={{ opacity: 0, height: 0, marginBottom: 0, scale: 0.98 }}
       transition={{ duration: 0.22, ease: "easeOut" }}
       className={clsx(
-        "grid grid-cols-1 gap-3 rounded-large border p-4 items-center overflow-hidden lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-2 lg:py-3 last:mb-0",
+        "border-default-200 grid grid-cols-1 gap-3 rounded-large border p-4 items-center overflow-hidden lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-2 lg:py-3",
         ROW_GRID,
-        over ? "border-danger-200 bg-danger-50/50" : "border-default-200",
+        over && "bg-danger-50/50",
       )}
     >
       <Controller

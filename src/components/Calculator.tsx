@@ -9,6 +9,7 @@ import {
 } from "../utils/schengen.ts";
 import { CalculatorCard } from "./CalculatorCard.tsx";
 import { Summary } from "./Summary.tsx";
+import { Alert } from "@heroui/react";
 
 export function Calculator() {
   const [trips, setTrips] = useState<TripInput[]>([createTrip()]);
@@ -35,6 +36,16 @@ export function Calculator() {
 
   return (
     <div id="calculator" className="scroll-mt-24 flex flex-col gap-4">
+      <Alert
+        title="Important information about Schengen visa rules"
+        description="Non-EU visitors who don’t need a visa can spend up to 90 days in the
+        Schengen Area within any rolling 180-day period. For each day, you count
+        back 180 days, and entry and exit days both count. Days drop out of the
+        window as time passes, so your allowance returns gradually, and
+        overstaying can bring fines or an entry ban."
+        type="info"
+        variant="flat"
+      />
       <CalculatorCard
         trips={trips}
         errors={errors}

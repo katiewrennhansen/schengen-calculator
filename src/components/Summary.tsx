@@ -45,7 +45,6 @@ export function Summary({
               </p>
             </div>
             <DatePicker
-              size="sm"
               variant="bordered"
               label="Check allowance on"
               className="sm:max-w-[200px]"

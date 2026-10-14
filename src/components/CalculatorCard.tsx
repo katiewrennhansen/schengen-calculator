@@ -9,16 +9,9 @@ import {
   type TripInput,
   type ValidationErrors,
 } from "../utils/schengen.ts";
+import { COLUMN_HEADERS, ROW_GRID } from "../constants.ts";
 import { ClearModal } from "./ClearModal.tsx";
-import { ROW_GRID, TripRow } from "./TripRow.tsx";
-
-const COLUMN_HEADERS = [
-  "Date of entry",
-  "Date of exit",
-  "Days of stay",
-  "Days in last 180 days",
-  "Last day to stay",
-];
+import { TripRow } from "./TripRow.tsx";
 
 type CalculatorCardProps = {
   trips: TripInput[];
@@ -111,7 +104,7 @@ export function CalculatorCard({
               <span className="sr-only">Remove</span>
             </div>
 
-            <ul className="flex flex-col gap-0">
+            <ul className="flex flex-col gap-4 lg:gap-0">
               <AnimatePresence initial={false} mode="popLayout">
                 {formTrips.map((trip, i) => (
                   <TripRow
