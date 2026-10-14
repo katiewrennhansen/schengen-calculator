@@ -1,8 +1,4 @@
-import {
-  ArrowDownIcon,
-  CalendarDaysIcon,
-  ShieldCheckIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowDownIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
 import { Button } from "@heroui/react";
 import { IoIosAirplane } from "react-icons/io";
 
