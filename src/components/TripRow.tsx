@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import clsx from "clsx";
 import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { parseDate } from "@internationalized/date";
@@ -9,14 +10,14 @@ import { formatDate, plural } from "../lib/format.ts";
 export const ROW_GRID =
   "lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.3fr)_minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1.4fr)_2.5rem]";
 
-interface Props {
+type Props = {
   index: number;
   trip: TripInput;
   error?: { entry?: string; exit?: string };
   result?: TripResult;
   onChange: (id: string, patch: Partial<Omit<TripInput, "id">>) => void;
   onRemove: (id: string) => void;
-}
+};
 
 /** Result cell: shows its own label on small screens, where the column header is hidden. */
 function Cell({ label, children }: { label: string; children: ReactNode }) {
@@ -56,9 +57,11 @@ export function TripRow({
       }}
       exit={{ opacity: 0, height: 0, marginBottom: 0, scale: 0.98 }}
       transition={{ duration: 0.22, ease: "easeOut" }}
-      className={`grid grid-cols-1 gap-3 rounded-large border p-4 items-center overflow-hidden lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-2 lg:py-3 last:mb-0 ${ROW_GRID} ${
-        over ? "border-danger-200 bg-danger-50/50" : "border-default-200"
-      }`}
+      className={clsx(
+        "grid grid-cols-1 gap-3 rounded-large border p-4 items-center overflow-hidden lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-2 lg:py-3 last:mb-0",
+        ROW_GRID,
+        over ? "border-danger-200 bg-danger-50/50" : "border-default-200",
+      )}
     >
       <DatePicker
         variant="bordered"

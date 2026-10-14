@@ -84,20 +84,22 @@ export function maxContinuousStay(
     last = d;
   }
   const length = last - entry + 1;
-  return length > 0 ? { lastDay: last, days: length } : { lastDay: null, days: 0 };
+  return length > 0
+    ? { lastDay: last, days: length }
+    : { lastDay: null, days: 0 };
 }
 
 /* ------------------------------ public types ----------------------------- */
 
-export interface TripInput {
+export type TripInput = {
   id: string;
   /** "YYYY-MM-DD" or "" */
   entry: string;
   /** "YYYY-MM-DD" or "" */
   exit: string;
-}
+};
 
-export interface TripResult {
+export type TripResult = {
   id: string;
   entry: string;
   exit: string;
@@ -115,9 +117,9 @@ export interface TripResult {
   excessDays: number;
   /** First day of this stay that breached the rule. */
   firstOverstayDate: string | null;
-}
+};
 
-export interface Plan {
+export type Plan = {
   /** The date the summary is evaluated for. */
   referenceDate: string;
   /** First day of the 180-day window ending on the reference date. */
@@ -129,14 +131,17 @@ export interface Plan {
   /** Last day you could stay if you entered on `nextEntry`. */
   nextLastDay: string | null;
   nextMaxDays: number;
-}
+};
 
-export interface CalculationResult {
+export type CalculationResult = {
   trips: TripResult[];
   plan: Plan;
-}
+};
 
-export type ValidationErrors = Record<string, { entry?: string; exit?: string }>;
+export type ValidationErrors = Record<
+  string,
+  { entry?: string; exit?: string }
+>;
 
 /* ------------------------------- validation ------------------------------ */
 
@@ -190,7 +195,10 @@ export function validateTrips(trips: TripInput[]): ValidationErrors {
  * Calculate results for a list of VALID trips (run validateTrips first).
  * Blank rows are skipped. Results come back in chronological order.
  */
-export function calculate(trips: TripInput[], referenceDate: string): CalculationResult {
+export function calculate(
+  trips: TripInput[],
+  referenceDate: string,
+): CalculationResult {
   const valid = trips
     .filter((t) => !isBlank(t))
     .map((t) => ({
@@ -221,7 +229,8 @@ export function calculate(trips: TripInput[], referenceDate: string): Calculatio
       exit: fromDayNumber(t.exit),
       daysOfStay: t.exit - t.entry + 1,
       daysInLast180: countInWindow(allDays, t.exit),
-      lastDayToStay: allowance.lastDay === null ? null : fromDayNumber(allowance.lastDay),
+      lastDayToStay:
+        allowance.lastDay === null ? null : fromDayNumber(allowance.lastDay),
       maxStayDays: allowance.days,
       overstay: worst > MAX_DAYS,
       excessDays: Math.max(0, worst - MAX_DAYS),
@@ -244,7 +253,8 @@ function buildPlan(allDays: ReadonlySet<number>, referenceDate: string): Plan {
       break;
     }
   }
-  const allowance = nextEntry === null ? null : maxContinuousStay(allDays, nextEntry);
+  const allowance =
+    nextEntry === null ? null : maxContinuousStay(allDays, nextEntry);
 
   return {
     referenceDate: fromDayNumber(ref),
@@ -253,7 +263,9 @@ function buildPlan(allDays: ReadonlySet<number>, referenceDate: string): Plan {
     daysRemaining: Math.max(0, MAX_DAYS - used),
     nextEntry: nextEntry === null ? null : fromDayNumber(nextEntry),
     nextLastDay:
-      allowance?.lastDay === null || allowance === null ? null : fromDayNumber(allowance.lastDay),
+      allowance?.lastDay === null || allowance === null
+        ? null
+        : fromDayNumber(allowance.lastDay),
     nextMaxDays: allowance?.days ?? 0,
   };
 }

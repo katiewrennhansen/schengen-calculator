@@ -1,12 +1,23 @@
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from "@heroui/react";
 
-interface ClearModalProps {
+type ClearModalProps = {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
-}
+};
 
-export function ClearModal({ isOpen, onOpenChange, onConfirm }: ClearModalProps) {
+export function ClearModal({
+  isOpen,
+  onOpenChange,
+  onConfirm,
+}: ClearModalProps) {
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>

@@ -17,7 +17,7 @@ const COLUMN_HEADERS = [
   "Last day to stay",
 ];
 
-interface CalculatorCardProps {
+type CalculatorCardProps = {
   trips: TripInput[];
   errors: ValidationErrors;
   showErrors: boolean;
@@ -28,7 +28,7 @@ interface CalculatorCardProps {
   onRemove: (id: string) => void;
   onOpenResetModal: () => void;
   onCalculate: () => void;
-}
+};
 
 export function CalculatorCard({
   trips,
