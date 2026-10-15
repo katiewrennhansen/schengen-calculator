@@ -1,3 +1,4 @@
+import { Alert, Card, CardBody, useDisclosure } from "@heroui/react";
 import {
   type TripInput,
   type ValidationErrors,
@@ -7,8 +8,8 @@ import {
   validateTrips,
 } from "../utils/schengen.ts";
 import { useMemo, useState } from "react";
-import { Alert } from "@heroui/react";
-import { CalculatorCard } from "./CalculatorCard.tsx";
+import { CalculatorForm } from "./CalculatorForm.tsx";
+import { ClearModal } from "./ClearModal.tsx";
 import { Summary } from "./Summary.tsx";
 
 export function Calculator() {
@@ -17,6 +18,7 @@ export function Calculator() {
   ]);
   const [referenceDate, setReferenceDate] = useState(todayIso());
   const [calculated, setCalculated] = useState(false);
+  const resetModal = useDisclosure();
 
   const errors: ValidationErrors = validateTrips(submittedTrips);
   const hasErrors = Object.keys(errors).length > 0;
@@ -37,6 +39,7 @@ export function Calculator() {
   const reset = () => {
     setSubmittedTrips([createTrip()]);
     setCalculated(false);
+    resetModal.onClose();
   };
 
   return (
@@ -51,12 +54,22 @@ export function Calculator() {
         variant="flat"
       />
 
-      <CalculatorCard
-        trips={submittedTrips}
-        errors={errors}
-        result={result}
-        onCalculate={calculateTrips}
-        onReset={reset}
+      <Card shadow="sm">
+        <CardBody className="p-4 sm:p-5">
+          <CalculatorForm
+            trips={submittedTrips}
+            errors={errors}
+            result={result}
+            onCalculate={calculateTrips}
+            onReset={resetModal.onOpen}
+          />
+        </CardBody>
+      </Card>
+
+      <ClearModal
+        isOpen={resetModal.isOpen}
+        onOpenChange={resetModal.onOpenChange}
+        onConfirm={reset}
       />
 
       {result && (
