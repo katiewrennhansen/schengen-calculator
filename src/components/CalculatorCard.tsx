@@ -49,6 +49,9 @@ export function CalculatorCard({
   const formTrips = useWatch({ control: form.control, name: "trips" }) ?? trips;
 
   const handleAdd = () => {
+    setShowErrors(false);
+    setNotice(null);
+
     const nextTrip: TripInput = {
       id: `trip-${Date.now()}-${Math.random().toString(16).slice(2)}`,
       entry: "",
@@ -61,6 +64,9 @@ export function CalculatorCard({
   };
 
   const handleRemove = (id: string) => {
+    setShowErrors(false);
+    setNotice(null);
+
     form.setValue(
       "trips",
       formTrips.filter((trip) => trip.id !== id),
@@ -71,6 +77,7 @@ export function CalculatorCard({
   const handleCalculate = form.handleSubmit(() => {
     setShowErrors(true);
     setNotice(null);
+
     if (hasErrors) return;
 
     const filled = formTrips.filter((t) => !isBlank(t));
@@ -121,7 +128,7 @@ export function CalculatorCard({
             </ul>
 
             {notice && (
-              <p role="alert" className="text-small text-danger">
+              <p role="alert" className="text-tiny text-danger pb-2">
                 {notice}
               </p>
             )}

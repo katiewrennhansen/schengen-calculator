@@ -12,25 +12,33 @@ import { CalculatorCard } from "./CalculatorCard.tsx";
 import { Summary } from "./Summary.tsx";
 
 export function Calculator() {
-  const [trips, setTrips] = useState<TripInput[]>([createTrip()]);
+  const [submittedTrips, setSubmittedTrips] = useState<TripInput[]>([
+    createTrip(),
+  ]);
   const [referenceDate, setReferenceDate] = useState(todayIso());
   const [calculated, setCalculated] = useState(false);
 
-  const errors: ValidationErrors = useMemo(() => validateTrips(trips), [trips]);
+  const errors: ValidationErrors = useMemo(
+    () => validateTrips(submittedTrips),
+    [submittedTrips],
+  );
   const hasErrors = Object.keys(errors).length > 0;
 
   const result = useMemo(
-    () => (calculated && !hasErrors ? calculate(trips, referenceDate) : null),
-    [calculated, hasErrors, trips, referenceDate],
+    () =>
+      calculated && !hasErrors
+        ? calculate(submittedTrips, referenceDate)
+        : null,
+    [calculated, hasErrors, submittedTrips, referenceDate],
   );
 
   const calculateTrips = (nextTrips: TripInput[]) => {
-    setTrips(nextTrips);
+    setSubmittedTrips(nextTrips);
     setCalculated(true);
   };
 
   const reset = () => {
-    setTrips([createTrip()]);
+    setSubmittedTrips([createTrip()]);
     setCalculated(false);
   };
 
@@ -45,8 +53,9 @@ export function Calculator() {
         overstaying can bring fines or an entry ban."
         variant="flat"
       />
+
       <CalculatorCard
-        trips={trips}
+        trips={submittedTrips}
         errors={errors}
         result={result}
         hasErrors={hasErrors}
