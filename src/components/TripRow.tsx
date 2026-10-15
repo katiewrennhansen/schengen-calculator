@@ -1,14 +1,13 @@
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { parseDate } from "@internationalized/date";
 import { Button, Chip, DatePicker } from "@heroui/react";
 import { Controller, type Control } from "react-hook-form";
 import { Cell } from "./Cell.tsx";
 import type { TripInput, TripResult } from "../utils/schengen.ts";
 import { formatDate, plural } from "../utils/format.ts";
 import { ROW_GRID } from "../constants.ts";
-import { toIsoDate } from "../utils/dates.ts";
+import { parseIsoDate, toIsoDate } from "../utils/dates.ts";
 
 type Props = {
   index: number;
@@ -60,9 +59,9 @@ export function TripRow({
             variant="bordered"
             aria-label={`Date of entry, stay ${index + 1}`}
             labelPlacement="inside"
-            value={field.value ? (parseDate(field.value) as any) : null}
+            value={parseIsoDate(field.value)}
             onChange={(date) => {
-              field.onChange(toIsoDate(date));
+              field.onChange(date ? toIsoDate(date) : "");
             }}
             isInvalid={!!error?.entry}
             errorMessage={error?.entry}
@@ -76,10 +75,10 @@ export function TripRow({
           <DatePicker
             variant="bordered"
             aria-label={`Date of exit, stay ${index + 1}`}
-            minValue={trip.entry ? (parseDate(trip.entry) as any) : undefined}
-            value={field.value ? (parseDate(field.value) as any) : null}
+            minValue={trip.entry ? parseIsoDate(trip.entry) : undefined}
+            value={parseIsoDate(field.value)}
             onChange={(date) => {
-              field.onChange(toIsoDate(date));
+              field.onChange(date ? toIsoDate(date) : "");
             }}
             isInvalid={!!error?.exit}
             errorMessage={error?.exit}

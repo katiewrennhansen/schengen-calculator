@@ -1,5 +1,5 @@
-import { parseDate } from "@internationalized/date";
 import { Card, CardBody, DatePicker, Progress } from "@heroui/react";
+import { parseIsoDate, toIsoDate } from "../utils/dates.ts";
 import type { CalculationResult } from "../utils/schengen.ts";
 import { MAX_DAYS } from "../utils/schengen.ts";
 import { formatDate, plural } from "../utils/format.ts";
@@ -48,10 +48,10 @@ export function Summary({
               variant="bordered"
               label="Check allowance on"
               className="sm:max-w-[200px]"
-              value={referenceDate ? (parseDate(referenceDate) as any) : null}
-              onChange={(date: any) =>
-                date && onReferenceDateChange(date.toString())
-              }
+              value={parseIsoDate(referenceDate)}
+              onChange={(date) => {
+                onReferenceDateChange(date ? toIsoDate(date) : "");
+              }}
             />
           </div>
 

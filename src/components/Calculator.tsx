@@ -43,7 +43,6 @@ export function Calculator() {
         back 180 days, and entry and exit days both count. Days drop out of the
         window as time passes, so your allowance returns gradually, and
         overstaying can bring fines or an entry ban."
-        type="info"
         variant="flat"
       />
       <CalculatorCard
