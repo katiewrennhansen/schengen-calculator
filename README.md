@@ -13,13 +13,13 @@ npm run build    # type-check and build
 
 ## How it's organised
 
-| File | Purpose |
-| --- | --- |
-| `src/lib/schengen.ts` | The 90/180 engine. Pure functions, no React. |
-| `src/lib/schengen.test.ts` | Tests for the rolling-window maths. |
-| `src/App.tsx` | State, validation display, Add / Calculate / Reset. |
-| `src/components/TripRow.tsx` | One stay: date inputs plus per-stay results. |
-| `src/components/Summary.tsx` | Days used / remaining and next available stay. |
+| File                         | Purpose                                             |
+| ---------------------------- | --------------------------------------------------- |
+| `src/lib/schengen.ts`        | The 90/180 engine. Pure functions, no React.        |
+| `src/lib/schengen.test.ts`   | Tests for the rolling-window maths.                 |
+| `src/App.tsx`                | State, validation display, Add / Calculate / Reset. |
+| `src/components/TripRow.tsx` | One stay: date inputs plus per-stay results.        |
+| `src/components/Summary.tsx` | Days used / remaining and next available stay.      |
 
 ## The rule as implemented
 

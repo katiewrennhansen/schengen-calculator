@@ -19,16 +19,12 @@ function isCalendarDateLike(value: unknown): value is CalendarDateLike {
   );
 }
 
-export function parseIsoDate(
-  value: string | null | undefined,
-): DateValue | null {
+export function parseIsoDate(value?: string | null): DateValue | null {
   if (!value) return null;
   return parseDate(value);
 }
 
-export function toIsoDate(
-  value: DateValue | Date | string | null | undefined,
-): string {
+export function toIsoDate(value?: DateValue | Date | string | null): string {
   if (!value) return "";
 
   if (typeof value === "string") return value;

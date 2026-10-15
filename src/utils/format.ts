@@ -15,4 +15,5 @@ export function formatDate(iso: string | null): string {
   return formatter.format(new Date(day * 86_400_000));
 }
 
-export const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
+export const plural = (n: number, word: string) =>
+  `${n} ${word}${n === 1 ? "" : "s"}`;
