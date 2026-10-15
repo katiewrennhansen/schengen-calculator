@@ -17,7 +17,6 @@ type CalculatorCardProps = {
   trips: TripInput[];
   errors: ValidationErrors;
   result: CalculationResult | null;
-  hasErrors: boolean;
   onCalculate: (nextTrips: TripInput[]) => void;
   onReset: () => void;
 };
@@ -26,7 +25,6 @@ export function CalculatorCard({
   trips,
   errors,
   result,
-  hasErrors,
   onCalculate,
   onReset,
 }: CalculatorCardProps) {
@@ -77,8 +75,6 @@ export function CalculatorCard({
   const handleCalculate = form.handleSubmit(() => {
     setShowErrors(true);
     setNotice(null);
-
-    if (hasErrors) return;
 
     const filled = formTrips.filter((t) => !isBlank(t));
     if (filled.length === 0) {

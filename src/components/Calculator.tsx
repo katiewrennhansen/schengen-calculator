@@ -18,10 +18,7 @@ export function Calculator() {
   const [referenceDate, setReferenceDate] = useState(todayIso());
   const [calculated, setCalculated] = useState(false);
 
-  const errors: ValidationErrors = useMemo(
-    () => validateTrips(submittedTrips),
-    [submittedTrips],
-  );
+  const errors: ValidationErrors = validateTrips(submittedTrips);
   const hasErrors = Object.keys(errors).length > 0;
 
   const result = useMemo(
@@ -58,7 +55,6 @@ export function Calculator() {
         trips={submittedTrips}
         errors={errors}
         result={result}
-        hasErrors={hasErrors}
         onCalculate={calculateTrips}
         onReset={reset}
       />
