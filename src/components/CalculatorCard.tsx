@@ -126,10 +126,11 @@ export function CalculatorCard({
               </p>
             )}
 
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-default-200 pt-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 lg:border-t border-default-200 pt-4">
               <Button
                 type="button"
-                variant="flat"
+                variant="bordered"
+                color="primary"
                 startContent={<PlusIcon className="size-4" />}
                 onPress={handleAdd}
               >

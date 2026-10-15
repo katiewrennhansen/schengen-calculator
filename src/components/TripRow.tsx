@@ -46,7 +46,7 @@ export function TripRow({
       exit={{ opacity: 0, height: 0, marginBottom: 0, scale: 0.98 }}
       transition={{ duration: 0.22, ease: "easeOut" }}
       className={clsx(
-        "border-default-200 grid grid-cols-1 gap-3 rounded-large border p-4 items-center overflow-hidden lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-2 lg:py-3",
+        "border-default-200 grid grid-cols-1 gap-3 rounded-large border p-4 items-center overflow-hidden lg:gap-4 lg:border-0 lg:border-t lg:rounded-none lg:px-0 lg:py-3",
         ROW_GRID,
         over && "bg-danger-50/50",
       )}
