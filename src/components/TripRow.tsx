@@ -1,13 +1,13 @@
-import clsx from "clsx";
-import { motion } from "framer-motion";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import { Button, Chip, DatePicker } from "@heroui/react";
-import { Controller, type Control } from "react-hook-form";
-import { Cell } from "./Cell.tsx";
+import { type Control, Controller } from "react-hook-form";
 import type { TripInput, TripResult } from "../utils/schengen.ts";
 import { formatDate, plural } from "../utils/format.ts";
-import { ROW_GRID } from "../constants.ts";
 import { parseIsoDate, toIsoDate } from "../utils/dates.ts";
+import { Cell } from "./Cell.tsx";
+import { ROW_GRID } from "../constants.ts";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
+import { motion } from "framer-motion";
 
 type Props = {
   index: number;
@@ -52,7 +52,7 @@ export function TripRow({
       )}
     >
       <Controller
-        name={`trips.${index}.entry` as const}
+        name={`trips.${index}.entry`}
         control={control}
         render={({ field }) => (
           <DatePicker
@@ -69,7 +69,7 @@ export function TripRow({
         )}
       />
       <Controller
-        name={`trips.${index}.exit` as const}
+        name={`trips.${index}.exit`}
         control={control}
         render={({ field }) => (
           <DatePicker

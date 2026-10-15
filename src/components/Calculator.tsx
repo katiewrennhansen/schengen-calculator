@@ -1,15 +1,15 @@
-import { useMemo, useState } from "react";
 import {
+  type TripInput,
+  type ValidationErrors,
   calculate,
   createTrip,
   todayIso,
   validateTrips,
-  type TripInput,
-  type ValidationErrors,
 } from "../utils/schengen.ts";
+import { useMemo, useState } from "react";
+import { Alert } from "@heroui/react";
 import { CalculatorCard } from "./CalculatorCard.tsx";
 import { Summary } from "./Summary.tsx";
-import { Alert } from "@heroui/react";
 
 export function Calculator() {
   const [trips, setTrips] = useState<TripInput[]>([createTrip()]);

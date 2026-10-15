@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import { AnimatePresence } from "framer-motion";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import { Button, Card, CardBody, useDisclosure } from "@heroui/react";
+import { COLUMN_HEADERS, ROW_GRID } from "../constants.ts";
 import {
-  isBlank,
   type CalculationResult,
   type TripInput,
   type ValidationErrors,
+  isBlank,
 } from "../utils/schengen.ts";
-import { COLUMN_HEADERS, ROW_GRID } from "../constants.ts";
+import { useEffect, useMemo, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { AnimatePresence } from "framer-motion";
 import { ClearModal } from "./ClearModal.tsx";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { TripRow } from "./TripRow.tsx";
 
 type CalculatorCardProps = {

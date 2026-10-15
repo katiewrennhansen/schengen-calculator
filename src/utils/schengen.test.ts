@@ -1,12 +1,12 @@
-import { test } from "node:test";
-import assert from "node:assert/strict";
 import {
   calculate,
-  validateTrips,
-  toDayNumber,
   fromDayNumber,
+  toDayNumber,
+  validateTrips,
 } from "./schengen.ts";
 import { loadPersistedTrips, savePersistedTrips } from "./storage.ts";
+import assert from "node:assert/strict";
+import { test } from "node:test";
 
 const t = (id: string, entry: string, exit: string) => ({ id, entry, exit });
 
