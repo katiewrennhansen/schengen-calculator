@@ -16,7 +16,7 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": " prettier --write .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
