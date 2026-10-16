@@ -1,5 +1,5 @@
-import { Calculator } from "./components/Calculator.tsx";
-import { Disclaimer } from "./components/Disclaimer.tsx";
+import { Calculator } from "./components/Calculator/Calculator.tsx";
+import { Disclaimer } from "./components/Disclaimer/Disclaimer.tsx";
 import { Header } from "./components/Header/Header.tsx";
 
 export default function App() {

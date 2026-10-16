@@ -9000,10 +9000,9 @@
       display: none;
     }
     .lg\:grid-cols-\[minmax\(0\,1\.3fr\)_minmax\(0\,1\.3fr\)_minmax\(0\,0\.8fr\)_minmax\(0\,1fr\)_minmax\(0\,1\.4fr\)_2\.5rem\] {
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.3fr) minmax(
-          0,
-          0.8fr
-        ) minmax(0, 1fr) minmax(0, 1.4fr) 2.5rem;
+      grid-template-columns:
+        minmax(0, 1.3fr) minmax(0, 1.3fr) minmax(0, 0.8fr)
+        minmax(0, 1fr) minmax(0, 1.4fr) 2.5rem;
     }
     .lg\:gap-0 {
       gap: 0;

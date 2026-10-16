@@ -4,11 +4,11 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import * as React from "react";
 import { type Control, Controller } from "react-hook-form";
-import { ROW_GRID } from "../constants.ts";
-import { parseIsoDate, toIsoDate } from "../utils/dates.ts";
-import { formatDate, plural } from "../utils/format.ts";
-import type { TripInput, TripResult } from "../types.ts";
-import { Cell } from "./Cell.tsx";
+import { ROW_GRID } from "../../constants.ts";
+import { parseIsoDate, toIsoDate } from "../../utils/dates.ts";
+import { formatDate, plural } from "../../utils/format.ts";
+import type { TripInput, TripResult } from "../../types.ts";
+import { Cell } from "../Cell/Cell.tsx";
 
 type Props = {
   index: number;

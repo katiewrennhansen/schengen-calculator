@@ -39406,25 +39406,23 @@ function dI(e) {
               : f.gridBodyRow({ class: b == null ? void 0 : b.gridBodyRow }),
           "data-slot": "grid-body-row",
           inert: p4(!!m),
-          children: d
-            .getDatesInWeek(C, t)
-            .map((S, T) =>
-              S
-                ? R.jsx(
-                    uI,
-                    {
-                      classNames: b,
-                      currentMonth: t,
-                      date: S,
-                      firstDayOfWeek: s,
-                      isPickerVisible: m,
-                      slots: f,
-                      state: d,
-                    },
-                    T,
-                  )
-                : R.jsx("td", {}, T),
-            ),
+          children: d.getDatesInWeek(C, t).map((S, T) =>
+            S
+              ? R.jsx(
+                  uI,
+                  {
+                    classNames: b,
+                    currentMonth: t,
+                    date: S,
+                    firstDayOfWeek: s,
+                    isPickerVisible: m,
+                    slots: f,
+                    state: d,
+                  },
+                  T,
+                )
+              : R.jsx("td", {}, T),
+          ),
         },
         C,
       ),

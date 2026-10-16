@@ -3,14 +3,14 @@ import { Button } from "@heroui/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useForm, useWatch } from "react-hook-form";
 import { AnimatePresence } from "framer-motion";
-import { COLUMN_HEADERS, ROW_GRID } from "../constants.ts";
-import { isBlank } from "../utils/schengen.ts";
+import { COLUMN_HEADERS, ROW_GRID } from "../../constants.ts";
+import { isBlank } from "../../utils/schengen.ts";
 import type {
   CalculationResult,
   TripInput,
   ValidationErrors,
-} from "../types.ts";
-import { TripRow } from "./TripRow.tsx";
+} from "../../types.ts";
+import { TripRow } from "../TripRow/TripRow.tsx";
 
 type CalculatorFormProps = {
   trips: TripInput[];
