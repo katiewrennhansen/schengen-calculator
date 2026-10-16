@@ -1,6 +1,6 @@
 import { Alert } from "@heroui/react";
-import type { CalculationResult } from "../utils/schengen.ts";
-import { plural } from "../utils/format.ts";
+import type { CalculationResult } from "../../types.ts";
+import { plural } from "../../utils/format.ts";
 
 type OverstayAlertProps = {
   trips: CalculationResult["trips"];

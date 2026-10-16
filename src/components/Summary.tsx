@@ -1,9 +1,9 @@
 import { Card, CardBody, DatePicker, Progress } from "@heroui/react";
+import { OverstayAlert } from "./OverstayAlert/OverstayAlert.tsx";
 import { formatDate, plural } from "../utils/format.ts";
 import { parseIsoDate, toIsoDate } from "../utils/dates.ts";
-import type { CalculationResult } from "../utils/schengen.ts";
 import { MAX_DAYS } from "../utils/schengen.ts";
-import { OverstayAlert } from "./OverstayAlert";
+import type { CalculationResult } from "../types.ts";
 
 type Props = {
   result: CalculationResult;

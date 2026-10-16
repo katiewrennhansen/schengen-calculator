@@ -4,32 +4,31 @@ import {
   toDayNumber,
   validateTrips,
 } from "./schengen.ts";
+import { expect, test } from "vitest";
 import { loadPersistedTrips, savePersistedTrips } from "./storage.ts";
-import assert from "node:assert/strict";
-import { test } from "node:test";
 
 const t = (id: string, entry: string, exit: string) => ({ id, entry, exit });
 
 test("date round trip and invalid dates", () => {
-  assert.equal(fromDayNumber(toDayNumber("2024-02-29")!), "2024-02-29");
-  assert.equal(toDayNumber("2025-02-31"), null);
-  assert.equal(toDayNumber(""), null);
+  expect(fromDayNumber(toDayNumber("2024-02-29")!)).toBe("2024-02-29");
+  expect(toDayNumber("2025-02-31")).toBeNull();
+  expect(toDayNumber("")).toBeNull();
 });
 
 test("a stay of exactly 90 days is allowed, and counts both entry and exit day", () => {
   const r = calculate([t("a", "2025-01-01", "2025-03-31")], "2025-04-01");
-  assert.equal(r.trips[0].daysOfStay, 90);
-  assert.equal(r.trips[0].daysInLast180, 90);
-  assert.equal(r.trips[0].lastDayToStay, "2025-03-31");
-  assert.equal(r.trips[0].overstay, false);
-  assert.equal(r.plan.daysRemaining, 0);
+  expect(r.trips[0].daysOfStay).toBe(90);
+  expect(r.trips[0].daysInLast180).toBe(90);
+  expect(r.trips[0].lastDayToStay).toBe("2025-03-31");
+  expect(r.trips[0].overstay).toBe(false);
+  expect(r.plan.daysRemaining).toBe(0);
 });
 
 test("91 days is an overstay of 1 day, starting on day 91", () => {
   const r = calculate([t("a", "2025-01-01", "2025-04-01")], "2025-04-02");
-  assert.equal(r.trips[0].overstay, true);
-  assert.equal(r.trips[0].excessDays, 1);
-  assert.equal(r.trips[0].firstOverstayDate, "2025-04-01");
+  expect(r.trips[0].overstay).toBe(true);
+  expect(r.trips[0].excessDays).toBe(1);
+  expect(r.trips[0].firstOverstayDate).toBe("2025-04-01");
 });
 
 test("rolling window: old days drop out and extend a later stay", () => {
@@ -39,16 +38,16 @@ test("rolling window: old days drop out and extend a later stay", () => {
     "2024-07-01",
   );
   const b = r.trips.find((x) => x.id === "b")!;
-  assert.equal(b.lastDayToStay, "2024-09-25");
-  assert.equal(b.maxStayDays, 90);
+  expect(b.lastDayToStay).toBe("2024-09-25");
+  expect(b.maxStayDays).toBe(90);
 });
 
 test("full allowance used: next entry is when the first day rolls out", () => {
   const r = calculate([t("a", "2025-01-01", "2025-03-31")], "2025-04-01");
   // Window of Jun 29 (day 180) still contains Jan 1; Jun 30 does not.
-  assert.equal(r.plan.nextEntry, "2025-06-30");
-  assert.equal(r.plan.daysUsed, 90);
-  assert.ok(r.plan.nextMaxDays >= 1);
+  expect(r.plan.nextEntry).toBe("2025-06-30");
+  expect(r.plan.daysUsed).toBe(90);
+  expect(r.plan.nextMaxDays >= 1).toBe(true);
 });
 
 test("same-day re-entry counts the shared day once", () => {
@@ -56,7 +55,7 @@ test("same-day re-entry counts the shared day once", () => {
     [t("a", "2025-01-01", "2025-01-10"), t("b", "2025-01-10", "2025-01-20")],
     "2025-01-21",
   );
-  assert.equal(r.plan.daysUsed, 20);
+  expect(r.plan.daysUsed).toBe(20);
 });
 
 test("validation: bad order, overlap, missing dates; blank rows ignored", () => {
@@ -67,10 +66,10 @@ test("validation: bad order, overlap, missing dates; blank rows ignored", () => 
     t("d", "2025-05-01", ""),
     t("e", "", ""),
   ]);
-  assert.ok(e.a.exit);
-  assert.ok(e.b.exit && e.c.entry);
-  assert.ok(e.d.exit);
-  assert.equal(e.e, undefined);
+  expect(Boolean(e.a.exit)).toBe(true);
+  expect(Boolean(e.b.exit && e.c.entry)).toBe(true);
+  expect(Boolean(e.d.exit)).toBe(true);
+  expect(e.e).toBeUndefined();
 });
 
 test("results are returned in chronological order", () => {
@@ -81,10 +80,7 @@ test("results are returned in chronological order", () => {
     ],
     "2025-06-01",
   );
-  assert.deepEqual(
-    r.trips.map((x) => x.id),
-    ["early", "late"],
-  );
+  expect(r.trips.map((x) => x.id)).toEqual(["early", "late"]);
 });
 
 test("saved trips can be restored from local storage", () => {
@@ -107,5 +103,5 @@ test("saved trips can be restored from local storage", () => {
   ];
 
   savePersistedTrips(trips);
-  assert.deepEqual(loadPersistedTrips(), trips);
+  expect(loadPersistedTrips()).toEqual(trips);
 });

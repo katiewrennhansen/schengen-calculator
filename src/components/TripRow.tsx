@@ -1,13 +1,14 @@
 import { Button, Chip, DatePicker } from "@heroui/react";
-import { type Control, Controller } from "react-hook-form";
-import type { TripInput, TripResult } from "../utils/schengen.ts";
-import { formatDate, plural } from "../utils/format.ts";
-import { parseIsoDate, toIsoDate } from "../utils/dates.ts";
-import { Cell } from "./Cell.tsx";
-import { ROW_GRID } from "../constants.ts";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import * as React from "react";
+import { type Control, Controller } from "react-hook-form";
+import { ROW_GRID } from "../constants.ts";
+import { parseIsoDate, toIsoDate } from "../utils/dates.ts";
+import { formatDate, plural } from "../utils/format.ts";
+import type { TripInput, TripResult } from "../types.ts";
+import { Cell } from "./Cell.tsx";
 
 type Props = {
   index: number;
@@ -18,14 +19,10 @@ type Props = {
   onRemove: (id: string) => void;
 };
 
-export function TripRow({
-  index,
-  trip,
-  error,
-  result,
-  control,
-  onRemove,
-}: Props) {
+const TripRow = React.forwardRef<HTMLLIElement, Props>(function TripRow(
+  { index, trip, error, result, control, onRemove },
+  ref,
+) {
   const over = result?.overstay ?? false;
   const chipColor = result?.overstay
     ? "danger"
@@ -35,6 +32,7 @@ export function TripRow({
 
   return (
     <motion.li
+      ref={ref}
       layout
       initial={{ opacity: 0, height: 0, marginBottom: 0, scale: 0.98, y: 8 }}
       animate={{
@@ -141,4 +139,6 @@ export function TripRow({
       </div>
     </motion.li>
   );
-}
+});
+
+export { TripRow };

@@ -1,16 +1,15 @@
 import { Alert, Card, CardBody, useDisclosure } from "@heroui/react";
+import { useMemo, useState } from "react";
+import { CalculatorForm } from "./CalculatorForm.tsx";
+import { ClearModal } from "./ClearModal.tsx";
+import { Summary } from "./Summary.tsx";
 import {
-  type TripInput,
-  type ValidationErrors,
   calculate,
   createTrip,
   todayIso,
   validateTrips,
 } from "../utils/schengen.ts";
-import { useMemo, useState } from "react";
-import { CalculatorForm } from "./CalculatorForm.tsx";
-import { ClearModal } from "./ClearModal.tsx";
-import { Summary } from "./Summary.tsx";
+import type { TripInput, ValidationErrors } from "../types.ts";
 
 export function Calculator() {
   const [submittedTrips, setSubmittedTrips] = useState<TripInput[]>([

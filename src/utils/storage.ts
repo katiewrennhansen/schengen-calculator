@@ -1,4 +1,4 @@
-import type { TripInput } from "./schengen.ts";
+import type { TripInput } from "../types.ts";
 
 const STORAGE_KEY = "schengen-calculator-state";
 
