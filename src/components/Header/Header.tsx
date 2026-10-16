@@ -73,7 +73,7 @@ export function Header() {
         <div className="relative flex items-center justify-center">
           <div className="w-full max-w-[520px] rounded-[28px] p-3">
             <img
-              src="/schengen-calculator/schengen-map.png"
+              src={`${import.meta.env.BASE_URL}schengen-map.png`}
               alt="Schengen area map"
               className="h-auto w-full rounded-2xl object-cover"
             />
