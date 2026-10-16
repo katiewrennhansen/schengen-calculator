@@ -71,7 +71,7 @@ export function Header() {
         </div>
 
         <div className="relative flex items-center justify-center">
-          <div className="w-full max-w-[520px] rounded-[28px] p-3">
+          <div className="w-full max-w-[520px] rounded-[28px] p-3 hidden md:block">
             <img
               src={`${import.meta.env.BASE_URL}schengen-map.png`}
               alt="Schengen area map"
